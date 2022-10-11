@@ -40,7 +40,7 @@ class CMS
 
         $data = $response->json();
 
-        if ($data['status'] ?? 'error' == 'error') {
+        if (($data['status'] ?? 'error') == 'error') {
             return null;
         }
 
