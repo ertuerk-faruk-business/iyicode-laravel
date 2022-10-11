@@ -29,7 +29,7 @@ class CMS
         }
 
         $response = Http::withHeaders([
-            'X_IYICMS_APPLICATION_TOKEN' => $this->applicationToken,
+            'X-IYICMS-APPLICATION-TOKEN' => $this->applicationToken,
         ])->post('https://cms.iyicode.com/api/application/analytics/save', [
             'visitor' => $ip ?? Request::ip(),
         ]);
