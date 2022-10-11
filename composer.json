@@ -1,0 +1,33 @@
+{
+  "name": "iyicode/laravel",
+  "description": "Laravel Extension",
+  "authors": [
+    {
+      "name": "Faruk Ertürk",
+      "email": "ertuerk.faruk.business@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.0",
+    "livewire/livewire": "^2.10.7"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.25"
+  },
+  "autoload": {
+    "psr-4": {
+      "IyiCode\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "IyiCode\\Tests\\": "tests"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
