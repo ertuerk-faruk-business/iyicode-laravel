@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "IyiCode\\": "src"
+      "IyiCode\\": "src/app"
     }
   },
   "autoload-dev": {

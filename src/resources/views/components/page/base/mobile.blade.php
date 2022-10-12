@@ -2,7 +2,7 @@
 <div x-data="{ showSideBar: false }" class="xl:hidden absolute z-0 container mx-auto left-0 right-0">
     <div class="flex flex-col w-full relative">
         <div class="flex flex-row w-full items-start bg-slate-100">
-            @if (!IyiCode\Services\SideBar::isDisabled() && !empty($sideBar))
+            @if (!IyiCode\App\Services\SideBar::isDisabled() && !empty($sideBar))
                 <span x-show="showSideBar" x-cloak>
                     <div class="">
                         <div class="w-screen xl:w-60 bg-white h-full">

@@ -1,5 +1,5 @@
 @props(['placeholder'])
-@if (\IyiCode\Services\GoogleMaps::isAccepted())
+@if (\IyiCode\App\Services\GoogleMaps::isAccepted())
     {{ $slot }}
 @else
     @isset($placeholder)

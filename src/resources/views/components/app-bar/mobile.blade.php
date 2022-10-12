@@ -1,7 +1,7 @@
 @props(['bottom'])
 <div class="xl:hidden">
     <div {{ $attributes->merge(['class' => 'h-full flex flex-row items-center']) }}>
-        @if (!IyiCode\Services\SideBar::isDisabled())
+        @if (!IyiCode\App\Services\SideBar::isDisabled())
             <div x-show="!showSideBar" x-cloak>
                 <div @click="showSideBar=true, localStorage.setItem('showSideBar', true)">
                     <x-iyicode::svg.menu-alt4 class="w-6 h-6 mr-6 cursor-pointer" />
