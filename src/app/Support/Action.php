@@ -2,7 +2,7 @@
 
 namespace IyiCode\App\Support;
 
-use IyiCode\Support\Action\Response;
+use IyiCode\App\Support\Action\Response;
 
 abstract class Action
 {

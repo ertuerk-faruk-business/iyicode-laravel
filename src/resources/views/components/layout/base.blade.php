@@ -17,7 +17,7 @@
     <meta name="color-scheme" content="dark only">
     <meta name="theme-color" content="{{ $themeColor ?? '#ffffff' }}">
     <meta name="canonical" href="{{ $canonical ?? '/' }}">
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? '' }}</title>
     <link href="{{ mix('/css/site.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="/favicon.png" />
     <livewire:styles />

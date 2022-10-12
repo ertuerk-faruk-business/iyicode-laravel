@@ -7,6 +7,11 @@
             </div>
         </div>
         <div class="flex flex-row items-center justify-end gap-6">
+            <x-iyicode::button.outline href="{{ route('iyicode.data-protection.index') }}"
+                background="bg-white hover:bg-black" border="border-black border"
+                text="text-black hover:text-white hover:underline">
+                {!! __('iyicode::cookie.info') !!}
+            </x-iyicode::button.outline>
             <x-iyicode::button.outline action="accept" background="bg-white hover:bg-black" border="border-black border"
                 text="text-black hover:text-white hover:underline">
                 {!! __('iyicode::cookie.accept') !!}

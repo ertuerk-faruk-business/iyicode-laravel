@@ -2,7 +2,7 @@
 
 namespace IyiCode\App\Livewire\View\Components;
 
-use IyiCode\Livewire\View;
+use IyiCode\App\Livewire\View;
 
 class Component
 {

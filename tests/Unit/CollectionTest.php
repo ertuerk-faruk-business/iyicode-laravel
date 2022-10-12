@@ -4,7 +4,7 @@ namespace IyiCode\Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use IyiCode\Support\Collection;
+use IyiCode\App\Support\Collection;
 
 class CollectionTest extends TestCase
 {

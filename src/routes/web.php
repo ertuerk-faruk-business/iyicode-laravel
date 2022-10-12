@@ -2,4 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/about/data-protection', 'App\Http\Controllers\DashboardController@index')->name('dashboard.index');
+Route::group(['middleware' => 'web'],  function () {
+    Route::get('/about/data-protection', 'IyiCode\App\Http\Controllers\DataProtectionController@index')->name('iyicode.data-protection.index');
+});

@@ -1,8 +1,8 @@
 <?php
 
-namespace IyiCode\App\\Support\Action;
+namespace IyiCode\App\Support\Action;
 
-use IyiCode\Support\Action\Response\Status;
+use IyiCode\App\Support\Action\Response\Status;
 
 class Response
 {

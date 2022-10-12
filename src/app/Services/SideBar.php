@@ -8,7 +8,7 @@ class SideBar
 
     private static bool $disabled = false;
 
-    public static function disabled()
+    public static function disable()
     {
         self::$disabled = true;
     }
