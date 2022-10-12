@@ -1,9 +1,9 @@
-@props(['sideBar', 'bottom'])
+@props(['sideBar', 'bottom', 'sideBarAlwaysVisible' => false, 'sideBarDisabled' => false, 'sideBarFixed' => true,])
 <div>
-    <x-iyicode::page.base.desktop :sideBar="$sideBar ?? null" :bottom="$bottom ?? null">
+    <x-iyicode::page.base.desktop :sideBarFixed="$sideBarFixed" :sideBarDisabled="$sideBarDisabled" :sideBarAlwaysVisible="$sideBarAlwaysVisible" :sideBar="$sideBar ?? null" :bottom="$bottom ?? null">
         {{ $slot }}
     </x-iyicode::page.base.desktop>
-    <x-iyicode::page.base.mobile :sideBar="$sideBar ?? null" :bottom="$bottom ?? null">
+    <x-iyicode::page.base.mobile :sideBarDisabled="$sideBarDisabled" :sideBar="$sideBar ?? null" :bottom="$bottom ?? null">
         {{ $slot }}
     </x-iyicode::page.base.mobile>
     @if (\IyiCode\App\Services\Layout::shouldAcceptCookies())
