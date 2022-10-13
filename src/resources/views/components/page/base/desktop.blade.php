@@ -1,11 +1,11 @@
-@props(['sideBar', 'bottom', 'sideBarAlwaysVisible' => false, 'sideBarDisabled' => false, 'sideBarFixed' => false])
-<div x-data="{ showSideBar: {{ $sideBarDisabled ? false : ($sideBarAlwaysVisible ? true : "localStorage.getItem('showSideBar') === 'true'") }} }" class="hidden xl:block absolute z-0 container mx-auto left-0 right-0">
+@props(['sideBar', 'bottom'])
+<div x-data="{ showSideBar: {{ IyiCode\App\Support\View\SideBar::isDisabled() ? false : (IyiCode\App\Support\View\SideBar::isAlwaysVisible() ? true : "localStorage.getItem('showSideBar') === 'true'") }} }" class="hidden xl:block absolute z-0 container mx-auto left-0 right-0">
     <div class="flex flex-col w-full relative">
         <div class="flex flex-row w-full items-start bg-slate-100">
-            @if (!$sideBarDisabled && !empty($sideBar))
+            @if (!IyiCode\App\Support\View\SideBar::isDisabled() && !empty($sideBar))
                 <span x-show="showSideBar" x-cloak>
                     <div>
-                        <div class="{{ $sideBarAlwaysVisible && !$sideBarFixed ? 'w-60' : 'w-0' }} bg-white h-full">
+                        <div class="{{ IyiCode\App\Support\View\SideBar::isAlwaysVisible() ? 'w-60' : (IyiCode\App\Support\View\SideBar::isFixed() ? 'w-0' : 'w-60') }} bg-white h-full">
                             <div class="fixed h-full z-[60]">
                                 {{ $sideBar }}
                             </div>

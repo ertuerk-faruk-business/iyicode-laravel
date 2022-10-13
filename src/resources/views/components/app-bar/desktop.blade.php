@@ -1,7 +1,7 @@
-@props(['bottom', 'sideBarDisabled' => false, 'sideBarAlwaysVisible' => false,])
+@props(['bottom'])
 <div class="hidden xl:block">
     <div {{ $attributes->merge(['class' => 'h-full flex flex-row items-center']) }}>
-        @if (!$sideBarDisabled && !$sideBarAlwaysVisible)
+        @if (!IyiCode\App\Support\View\SideBar::isDisabled() && !IyiCode\App\Support\View\SideBar::isAlwaysVisible())
             <div x-show="!showSideBar" x-cloak>
                 <div @click="showSideBar=true, localStorage.setItem('showSideBar', true)">
                     <x-iyicode::svg.menu-alt4 class="w-6 h-6 mr-6 cursor-pointer" />

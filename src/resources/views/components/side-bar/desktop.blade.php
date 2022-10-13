@@ -1,7 +1,7 @@
-@props(['head', 'alwaysVisible'])
+@props(['head'])
 <div class="hidden xl:block">
     <div class="flex flex-row items-center justify-start">
-        @unless($alwaysVisible)
+        @unless(IyiCode\App\Support\View\SideBar::isAlwaysVisible())
             <div @click="showSideBar=false, localStorage.setItem('showSideBar', false)">
                 <x-iyicode::svg.x class="w-6 h-6 mr-6 cursor-pointer" />
             </div>

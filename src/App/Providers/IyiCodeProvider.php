@@ -4,6 +4,7 @@ namespace IyiCode\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use IyiCode\App\Support\View\SideBar;
 use Livewire\Livewire;
 
 class IyiCodeProvider extends ServiceProvider
@@ -60,6 +61,22 @@ class IyiCodeProvider extends ServiceProvider
 
         Blade::directive('endfield', function ($expression) {
             return "<?php  ?>";
+        });
+
+        Blade::directive('sidebar', function ($expression) {
+            $exploded = explode(',', $expression);
+
+            foreach ($exploded as $key => $value) {
+                $prop = str_replace(' ', '', $value);
+
+                if ($prop == 'fixed') {
+                    SideBar::fixed();
+                } elseif ($prop == 'alwaysVisible') {
+                    SideBar::alwaysVisible();
+                } elseif ($prop == 'disable') {
+                    SideBar::disable();
+                }
+            }
         });
     }
 }
