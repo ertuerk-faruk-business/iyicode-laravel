@@ -3,6 +3,7 @@
 namespace IyiCode\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use IyiCode\App\Support\View\SideBar;
 use Livewire\Livewire;
@@ -64,19 +65,22 @@ class IyiCodeProvider extends ServiceProvider
         });
 
         Blade::directive('sidebar', function ($expression) {
-            $exploded = explode(',', $expression);
+            return '<?php $exploded = explode(",", ' . $expression . ');
 
             foreach ($exploded as $key => $value) {
-                $prop = str_replace(' ', '', $value);
-
-                if ($prop == 'fixed') {
-                    SideBar::fixed();
-                } elseif ($prop == 'alwaysVisible') {
-                    SideBar::alwaysVisible();
-                } elseif ($prop == 'disable') {
-                    SideBar::disable();
+                $prop = str_replace(" ", "", $value);
+                if ($prop == "fixed") {
+                    IyiCode\App\Support\View\SideBar::fixed();
+                } elseif ($prop == "alwaysVisible") {
+                    IyiCode\App\Support\View\SideBar::alwaysVisible();
+                } elseif ($prop == "disable") {
+                    IyiCode\App\Support\View\SideBar::disable();
                 }
-            }
+            }?>';
+        });
+
+        Blade::directive('endsidebar', function ($expression) {
+            return "<?php  ?>";
         });
     }
 }
