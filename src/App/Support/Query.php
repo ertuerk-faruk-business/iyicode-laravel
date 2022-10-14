@@ -2,7 +2,7 @@
 
 namespace IyiCode\App\Support;
 
-use IyiCode\Livewire\View;
+use IyiCode\App\Livewire\View;
 
 abstract class Query
 {
