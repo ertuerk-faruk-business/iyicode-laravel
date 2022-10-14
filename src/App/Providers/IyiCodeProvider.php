@@ -79,8 +79,17 @@ class IyiCodeProvider extends ServiceProvider
             }?>';
         });
 
-        Blade::directive('endsidebar', function ($expression) {
-            return "<?php  ?>";
+        Blade::directive('google', function ($expression) {
+            return '<?php $exploded = explode(",", ' . $expression . ');
+
+            foreach ($exploded as $key => $value) {
+                $prop = str_replace(" ", "", $value);
+                if ($prop == "maps") {
+                    IyiCode\App\Services\Google::withMaps();
+                } elseif ($prop == "adsense") {
+                    IyiCode\App\Services\Google::withAdsense();
+                }
+            }?>';
         });
     }
 }

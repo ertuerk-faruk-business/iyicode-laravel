@@ -4,6 +4,8 @@ namespace Iyicode\App\Http\Livewire\Components;
 
 use Illuminate\Contracts\View\View as ViewView;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use IyiCode\App\Livewire\View;
 use IyiCode\App\Services\GoogleAdsense;
 use IyiCode\App\Services\GoogleMaps;
@@ -25,5 +27,6 @@ class CookieLayout extends View
 
     public function readMore()
     {
+        return redirect()->route('iyicode.data-protection.index');
     }
 }
