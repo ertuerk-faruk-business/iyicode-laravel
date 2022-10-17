@@ -33,6 +33,13 @@ class Account
         return self::$token ?? session('iyicode_account_token');
     }
 
+    public static function forget()
+    {
+        session([
+            'iyicode_account_token' => null,
+        ]);
+    }
+
     public static function auth()
     {
         $account = self::get();
@@ -52,7 +59,7 @@ class Account
         return redirect('https://account.iyicode.com/api/auth?token=' . $token . '&&callback=' . $callback);
     }
 
-    public static function get()
+    public static function get(): Account|null
     {
         if (!empty(self::$account)) {
             return self::$account;
@@ -67,12 +74,14 @@ class Account
         $response = Http::get('https://account.iyicode.com/api/account/get?token=' . $token);
 
         if (!$response->ok()) {
+            self::forget();
             return null;
         }
 
         $data = $response->json();
 
         if (empty($data)) {
+            self::forget();
             return null;
         }
 
