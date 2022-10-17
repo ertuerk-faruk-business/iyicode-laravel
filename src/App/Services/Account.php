@@ -148,11 +148,11 @@ class Account
 
     public static function for(mixed $related, string $key = 'user_id'): mixed
     {
-        if ($related::class == Model::class) {
+        if (is_subclass_of($related, Model::class)) {
             return self::find($related->$key);
         }
 
-        if ($related::class == Collection::class) {
+        if (is_subclass_of($related, Collection::class)) {
             $related = $related->toArray();
         }
 
