@@ -162,10 +162,10 @@ class Account
 
             foreach ($related as $relatedKey => $relatedValue) {
                 if (is_array($relatedValue)) {
-                    $relatedValue = $relatedValue[$key];
+                    $relatedValue = $relatedValue[$key] ?? null;
                 }
 
-                if (!in_array($relatedValue, $query)) {
+                if ($relatedValue != null && !in_array($relatedValue, $query)) {
                     if (self::isCached($relatedValue)) {
                         array_push($cached, self::$cached[$relatedValue]);
                     }
