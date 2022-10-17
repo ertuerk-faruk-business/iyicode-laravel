@@ -5,6 +5,7 @@ namespace IyiCode\App\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request;
 
 class Account
 {
@@ -56,10 +57,10 @@ class Account
         $callback = route('iyicode.account.callback');
 
         if ($token == null) {
-            return redirect('https://account.iyicode.com/api/auth?callback=' . $callback);
+            return redirect('https://account.iyicode.com/api/auth?ip=' . Request::ip() . '&&callback=' . $callback);
         }
 
-        return redirect('https://account.iyicode.com/api/auth?token=' . $token . '&&callback=' . $callback);
+        return redirect('https://account.iyicode.com/api/auth?token=' . $token  . '&&ip=' . Request::ip() . '&&callback=' . $callback);
     }
 
     public static function get(): Account|null
@@ -74,7 +75,7 @@ class Account
             return null;
         }
 
-        $response = Http::get('https://account.iyicode.com/api/account/get?token=' . $token);
+        $response = Http::get('https://account.iyicode.com/api/account/get?token=' . $token . '&&ip=' . Request::ip());
 
         if (!$response->ok()) {
             self::forget();
