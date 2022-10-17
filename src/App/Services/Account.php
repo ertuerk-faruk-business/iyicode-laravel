@@ -10,6 +10,7 @@ class Account
 {
     private static mixed $account = null;
     private static mixed $token = null;
+    private static array $cached = [];
 
     private array $data = [];
 
@@ -94,6 +95,10 @@ class Account
 
     public static function find(mixed $id): Account|null
     {
+        if (self::isCached($id)) {
+            return self::$cached[$id];
+        }
+
         $accounts = self::query([
             'id' => $id,
         ], [
@@ -104,7 +109,7 @@ class Account
             return null;
         }
 
-        return $accounts[0];
+        $accounts[0];
     }
 
     public static function query(array $query = [], array $options = []): array
@@ -131,7 +136,11 @@ class Account
         $result = [];
 
         foreach ($data['accounts'] as $key =>  $value) {
-            $result[$value['id']] = new Account($value);
+            $account = new Account($value);
+
+            self::cache($account);
+
+            $result[$value['id']] = $account;
         }
 
         return $result;
@@ -140,34 +149,60 @@ class Account
     public static function for(mixed $related, string $key = 'user_id'): mixed
     {
         if ($related::class == Model::class) {
-            return self::find($related->user_id);
+            return self::find($related->$key);
         }
 
         if ($related::class == Collection::class) {
             $query = [];
+            $cached = [];
 
             $related->map(function ($model) use ($key) {
-                array_push($query, [
-                    'id' => $model->$key,
-                ]);
+                if (self::isCached($model->$key)) {
+                    array_push($cached, self::$cached[$model->$key]);
+                }
+
+                array_push($query, $model->$key);
             });
+
+            if (count($query) == count($cached)) {
+                return $cached;
+            }
 
             return self::query($query);
         }
 
         if (is_array($related)) {
             $query = [];
+            $cached = [];
 
             foreach ($related as $relatedKey => $relatedValue) {
-                array_push($query, [
-                    'id' => $relatedValue,
-                ]);
+                if (!in_array($relatedValue, $query)) {
+                    if (self::isCached($relatedValue)) {
+                        array_push($cached, self::$cached[$relatedValue]);
+                    }
+
+                    array_push($query, $relatedValue);
+                }
+            }
+
+            if (count($query) == count($cached)) {
+                return $cached;
             }
 
             return self::query($query);
         }
 
         return null;
+    }
+
+    private static function isCached(mixed $id): bool
+    {
+        return !empty(self::$cached[$id] ?? null);
+    }
+
+    private static function cache(Account $account)
+    {
+        self::$cached[$account->id()] = $account;
     }
 
     public function firstName(): string
