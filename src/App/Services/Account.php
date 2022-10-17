@@ -182,6 +182,12 @@ class Account
 
     private static function isCached(mixed $id): bool
     {
+        if ($id == null) {
+            return false;
+        }
+
+        $id = strval($id);
+
         return !empty(self::$cached[$id] ?? null);
     }
 
