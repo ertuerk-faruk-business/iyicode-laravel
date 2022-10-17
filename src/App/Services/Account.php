@@ -153,22 +153,7 @@ class Account
         }
 
         if ($related::class == Collection::class) {
-            $query = [];
-            $cached = [];
-
-            $related->map(function ($model) use ($key) {
-                if (self::isCached($model->$key)) {
-                    array_push($cached, self::$cached[$model->$key]);
-                }
-
-                array_push($query, $model->$key);
-            });
-
-            if (count($query) == count($cached)) {
-                return $cached;
-            }
-
-            return self::query($query);
+            $related = $related->toArray();
         }
 
         if (is_array($related)) {
