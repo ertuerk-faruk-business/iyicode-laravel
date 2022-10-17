@@ -109,7 +109,7 @@ class Account
             return null;
         }
 
-        $accounts[0];
+        return array_values($accounts)[0];
     }
 
     public static function query(array $query = [], array $options = []): array
