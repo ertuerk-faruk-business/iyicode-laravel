@@ -161,6 +161,10 @@ class Account
             $cached = [];
 
             foreach ($related as $relatedKey => $relatedValue) {
+                if (is_array($relatedValue)) {
+                    $relatedValue = $relatedValue[$key];
+                }
+
                 if (!in_array($relatedValue, $query)) {
                     if (self::isCached($relatedValue)) {
                         array_push($cached, self::$cached[$relatedValue]);
