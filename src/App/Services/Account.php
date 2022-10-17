@@ -188,7 +188,9 @@ class Account
 
         $id = strval($id);
 
-        return !empty(self::$cached[$id] ?? null);
+        $result = self::$cached[$id] ?? null;
+
+        return !empty($result);
     }
 
     private static function cache(Account $account)
