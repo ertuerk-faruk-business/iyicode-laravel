@@ -129,13 +129,13 @@ class Account
 
         $data = $response->json();
 
-        if (empty($data['accounts'])) {
+        if (empty($data)) {
             return [];
         }
 
         $result = [];
 
-        foreach ($data['accounts'] as $key =>  $value) {
+        foreach ($data as $key =>  $value) {
             $account = new Account($value);
 
             self::cache($account);
