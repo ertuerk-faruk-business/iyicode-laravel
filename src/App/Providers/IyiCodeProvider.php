@@ -3,9 +3,7 @@
 namespace IyiCode\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
-use IyiCode\App\Support\View\SideBar;
 use Livewire\Livewire;
 
 class IyiCodeProvider extends ServiceProvider
@@ -26,9 +24,9 @@ class IyiCodeProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'iyicode');
-
         $this->loadBladeDirectives();
+
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'iyicode');
 
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'iyicode');
 

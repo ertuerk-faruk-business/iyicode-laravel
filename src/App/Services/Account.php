@@ -2,6 +2,8 @@
 
 namespace IyiCode\App\Services;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 
 class Account
@@ -135,6 +137,39 @@ class Account
         return $result;
     }
 
+    public static function for(mixed $related, string $key = 'user_id'): mixed
+    {
+        if ($related::class == Model::class) {
+            return self::find($related->user_id);
+        }
+
+        if ($related::class == Collection::class) {
+            $query = [];
+
+            $related->map(function ($model) use ($key) {
+                array_push($query, [
+                    'id' => $model->$key,
+                ]);
+            });
+
+            return self::query($query);
+        }
+
+        if (is_array($related)) {
+            $query = [];
+
+            foreach ($related as $relatedKey => $relatedValue) {
+                array_push($query, [
+                    'id' => $relatedValue,
+                ]);
+            }
+
+            return self::query($query);
+        }
+
+        return null;
+    }
+
     public function firstName(): string
     {
         return $this->data['first_name'];
@@ -163,5 +198,10 @@ class Account
     public function id(): string|int
     {
         return $this->data['id'];
+    }
+
+    public function toArray(): array
+    {
+        return $this->data;
     }
 }
