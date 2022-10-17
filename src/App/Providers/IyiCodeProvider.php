@@ -40,6 +40,12 @@ class IyiCodeProvider extends ServiceProvider
 
     private function loadBladeDirectives()
     {
+        if (config('iyicode.auth.iyicode')) {
+            Blade::if('auth', function () {
+                return !empty(\IyiCode\App\Services\Account::get());
+            });
+        }
+
         Blade::directive('input', function ($expression) {
             return '<?php $input = $this->getInput(' . $expression . '); ?>';
         });
