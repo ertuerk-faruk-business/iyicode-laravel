@@ -40,7 +40,7 @@ class IyiCodeProvider extends ServiceProvider
 
     private function loadBladeDirectives()
     {
-        if (config('iyicode.auth.iyicode')) {
+        if (config('iyicode.auth.enabled', false)) {
             Blade::if('auth', function () {
                 if (auth()->check()) {
                     return true;
@@ -48,6 +48,14 @@ class IyiCodeProvider extends ServiceProvider
                 return !empty(\IyiCode\App\Services\Account::get());
             });
         }
+
+        Blade::directive('account', function () {
+            return '<?php $account = \IyiCode\App\Services\Account::get(); ?>';
+        });
+
+        Blade::directive('endaccount', function () {
+            return "<?php  ?>";
+        });
 
         Blade::directive('input', function ($expression) {
             return '<?php $input = $this->getInput(' . $expression . '); ?>';

@@ -12,9 +12,10 @@ class AccountController extends Controller
         $token =  request()->token;
 
         if ($token != null) {
-            Account::get($token);
+            Account::token($token);
+            Account::get();
         }
 
-        return redirect('/');
+        return redirect(config('iyicode.auth.callback.redirect', '/'));
     }
 }
