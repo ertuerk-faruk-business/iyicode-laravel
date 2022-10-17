@@ -42,6 +42,9 @@ class IyiCodeProvider extends ServiceProvider
     {
         if (config('iyicode.auth.iyicode')) {
             Blade::if('auth', function () {
+                if (auth()->check()) {
+                    return true;
+                }
                 return !empty(\IyiCode\App\Services\Account::get());
             });
         }
