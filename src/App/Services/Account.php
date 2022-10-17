@@ -150,4 +150,9 @@ class Account
     {
         return $this->data['email'];
     }
+
+    public function id(): string|int
+    {
+        return $this->data['id'];
+    }
 }
