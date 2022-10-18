@@ -22,8 +22,17 @@
                     </x-iyicode::button.outline>
                 </div>
             </div>
+            <p id="commandOutput" class="whitespace-pre-line max-h-screen overflow-scroll">
+            </p>
         </div>
     </div>
     <x-iyicode::loading.overlay target="updateEnv" />
     <x-iyicode::loading.overlay target="installNewestVersion" />
+    <script>
+        Livewire.on('commandOutput', output => {
+          var commandOutput = document.querySelectorAll('#commandOutput')[0];
+
+          commandOutput.innerHTML = output;
+        })
+        </script>
 </x-iyicode::page.base>

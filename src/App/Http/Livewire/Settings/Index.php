@@ -13,6 +13,10 @@ class Index extends View
     {
         Input::create($this, 'env')->build();
         $this->loadEnv();
+
+        return [
+            'command_output' => ''
+        ];
     }
 
     private function loadEnv()
@@ -44,16 +48,36 @@ class Index extends View
 
     public function installNewestVersion()
     {
-        $output = null;
+        $output = '';
 
-        $output = shell_exec('git pull');
+        $output .= $this->runCommand('git pull');
 
-        $output = shell_exec('composer install');
+        $output .= $this->runCommand([
+            'composer install',
+            'yes'
+        ]);
 
-        $output = shell_exec('npm run dev');
+        $output .= $this->runCommand('npm run dev');
 
-        $output = shell_exec('php artisan migrate');
+        $output .= $this->runCommand('php artisan migrate');
 
-        $output = shell_exec('php artisan optimize:clear');
+        $output .= $this->runCommand('php artisan optimize:clear');
+
+        $this->emit('commandOutput', $this->getContext('command_output'));
+    }
+
+    private function runCommand(mixed $commands): mixed
+    {
+        if (is_array($commands)) {
+            $command = implode(' && ', $commands);
+        } else {
+            $command = $commands;
+        }
+
+        $output =  shell_exec('cd ../ && ' . $command) ?? "Something went wrong\n";
+
+        $this->setContext('command_output', ($this->getContext('command_output') ?? '') ."\n".now()->format('d/m H:s')."\ncommand: <strong>". $command . "</strong>\n" . $output);
+
+        return $output;
     }
 }
