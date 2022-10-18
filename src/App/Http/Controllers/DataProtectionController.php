@@ -9,8 +9,6 @@ class DataProtectionController extends Controller
 {
     public function index()
     {
-        App::setLocale('de');
-
         return view('iyicode::data-protection.base');
     }
 }

@@ -34,6 +34,7 @@ class IyiCodeProvider extends ServiceProvider
 
         Livewire::component('iyicode.components.cookie-layout', \IyiCode\App\Http\Livewire\Components\CookieLayout::class);
         Livewire::component('iyicode.data-protection', \IyiCode\App\Http\Livewire\DataProtection\Index::class);
+        Livewire::component('iyicode.settings', \IyiCode\App\Http\Livewire\Settings\Index::class);
     }
 
     private function loadBladeDirectives()
