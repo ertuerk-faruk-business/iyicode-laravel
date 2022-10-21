@@ -11,6 +11,7 @@ class Account
 {
     private static mixed $account = null;
     private static mixed $token = null;
+    private static mixed $hash = null;
     private static array $cached = [];
 
     private array $data = [];
@@ -37,11 +38,32 @@ class Account
         return self::$token ?? session('iyicode_account_token');
     }
 
+    public static function hash(mixed $hash = null): mixed
+    {
+        if ($hash != null) {
+            session([
+                'iyicode_account_hash' => $hash,
+            ]);
+
+            self::$hash = $hash;
+        }
+
+        return self::$hash ?? session('iyicode_account_hash');
+    }
+
     public static function forget()
     {
         session([
             'iyicode_account_token' => null,
         ]);
+
+        session([
+            'iyicode_account_hash' => null,
+        ]);
+
+
+        self::$token = null;
+        self::$hash = null;
     }
 
     public static function auth()
@@ -52,15 +74,16 @@ class Account
             return null;
         }
 
-        $token = session('iyicode_account_token');
+        $token = self::token();
+        $hash = self::hash();
 
         $callback = route('iyicode.account.callback');
 
-        if ($token == null) {
+        if ($token == null || $hash == null) {
             return redirect('https://account.iyicode.com/api/auth?ip=' . Request::ip() . '&&callback=' . $callback);
         }
 
-        return redirect('https://account.iyicode.com/api/auth?token=' . $token  . '&&ip=' . Request::ip() . '&&callback=' . $callback);
+        return redirect('https://account.iyicode.com/api/auth?token=' . $token ?? ''  . '&&ip=' . Request::ip() . '&&callback=' . $callback . '&&hash=' . $hash ?? '');
     }
 
     public static function get(): Account|null
@@ -75,7 +98,13 @@ class Account
             return null;
         }
 
-        $response = Http::get('https://account.iyicode.com/api/account/get?token=' . $token . '&&ip=' . Request::ip());
+        $hash = self::hash();
+
+        if ($hash == null) {
+            return null;
+        }
+
+        $response = Http::get('https://account.iyicode.com/api/account/get?token=' . $token . '&&ip=' . Request::ip() . '&&hash=' . $hash);
 
         if (!$response->ok()) {
             self::forget();

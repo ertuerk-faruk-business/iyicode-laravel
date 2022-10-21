@@ -10,11 +10,17 @@ class AccountController extends Controller
     public function index()
     {
         $token =  request()->token;
+        $hash =  request()->hash;
 
         if ($token != null) {
             Account::token($token);
-            Account::get();
         }
+
+        if ($hash != null) {
+            Account::hash($hash);
+        }
+
+        Account::get();
 
         return redirect(config('iyicode.auth.callback.redirect', '/'));
     }
